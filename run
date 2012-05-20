@@ -40,12 +40,16 @@ CORE_DIR=$FWDIR/core
 REPL_DIR=$FWDIR/repl
 EXAMPLES_DIR=$FWDIR/examples
 BAGEL_DIR=$FWDIR/bagel
+ALGOS_DIR=$FWDIR/algos
+
+LR_DIR=$ALGOS_DIR/lr
 
 # Build up classpath
 CLASSPATH="$SPARK_CLASSPATH:$CORE_DIR/target/scala-$SCALA_VERSION/classes:$MESOS_CLASSPATH"
 CLASSPATH+=:$FWDIR/conf
 CLASSPATH+=:$REPL_DIR/target/scala-$SCALA_VERSION/classes
 CLASSPATH+=:$EXAMPLES_DIR/target/scala-$SCALA_VERSION/classes
+CLASSPATH+=:$LR_DIR/target/scala-$SCALA_VERSION/classes
 for jar in `find $CORE_DIR/lib -name '*jar'`; do
   CLASSPATH+=:$jar
 done

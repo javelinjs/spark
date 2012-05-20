@@ -5,7 +5,7 @@ import AssemblyKeys._
 
 object SparkBuild extends Build {
 
-  lazy val root = Project("root", file("."), settings = sharedSettings) aggregate(core, repl, examples, bagel)
+  lazy val root = Project("root", file("."), settings = sharedSettings) aggregate(core, repl, examples, bagel, lr)
 
   lazy val core = Project("core", file("core"), settings = coreSettings)
 
@@ -14,6 +14,8 @@ object SparkBuild extends Build {
   lazy val examples = Project("examples", file("examples"), settings = examplesSettings) dependsOn (core)
 
   lazy val bagel = Project("bagel", file("bagel"), settings = bagelSettings) dependsOn (core)
+
+  lazy val lr = Project("lr", file("algos/lr"), settings = lrSettings) dependsOn (core)
 
   def sharedSettings = Defaults.defaultSettings ++ Seq(
     organization := "org.spark-project",
@@ -69,4 +71,9 @@ object SparkBuild extends Build {
   )
 
   def bagelSettings = sharedSettings ++ Seq(name := "spark-bagel")
+
+  def lrSettings = sharedSettings ++ Seq(
+    name := "awkin-lr",
+    libraryDependencies += "colt" % "colt" % "1.2.0"
+  )
 }
