@@ -49,7 +49,7 @@ class Vector(val elements: Array[Double]) extends Serializable {
 
   def dist(other: Vector): Double = math.sqrt(squaredDist(other))
 
-  override def toString = elements.mkString("(", ", ", ")")
+  override def toString = elements.mkString("(", ",", ")")
 }
 
 object Vector {

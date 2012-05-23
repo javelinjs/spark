@@ -9,7 +9,7 @@ import spark._
 import scala.io._
 
 object HdfsLR {
-  val D = 10   // Numer of dimensions
+  var D = 1  // Numer of dimensions
   val rand = new Random(42)
 
   case class DataPoint(x: Vector, y: Double)
@@ -37,17 +37,18 @@ object HdfsLR {
   }
 
   def main(args: Array[String]) {
-    if (args.length < 6) {
-      System.err.println("Usage: HdfsLR <master> <file> <alpha> <threshold> <max_iteration> <output>")
+    if (args.length < 7) {
+      System.err.println("Usage: HdfsLR <master> <file> <dimension> <alpha> <threshold> <max_iteration> <output>")
       System.exit(1)
     }
     val sc = new SparkContext(args(0), "HdfsLR")
     val lines = sc.textFile(args(1))
+    D = args(2).toInt
     val points = lines.map(parsePoint _).cache()
-    val ALPHA = args(2).toDouble
-    val THRESHOLD = args(3).toDouble
-    val MAX_ITERATION = args(4).toInt
-    val outputFile = args(5)
+    val ALPHA = args(3).toDouble
+    val THRESHOLD = args(4).toDouble
+    val MAX_ITERATION = args(5).toInt
+    val outputFile = args(6)
 
     // Initialize w to a random value
     var w = Vector(D, _ => 2 * rand.nextDouble - 1)
